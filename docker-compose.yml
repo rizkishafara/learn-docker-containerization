@@ -1,0 +1,42 @@
+services:
+  app:
+    build: .
+    volumes:
+      - ./src/views:/app/views # Mount views directory
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: "db"
+      DB_PORT: "3306"
+      DB_USER: "root"
+      DB_PASS: "123"
+      DB_NAME: "uts_pss"
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - network-1
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "123"
+      MYSQL_DATABASE: "uts_pss"
+    volumes:
+      - D:/uts_pss/mysql-data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    networks:
+      - network-1
+    healthcheck:
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost --silent || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 30
+      start_period: 60s
+
+networks:
+  network-1:
+    driver: bridge
+volumes:
+  db_data:

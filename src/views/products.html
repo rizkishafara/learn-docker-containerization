@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Title}}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .sidebar {
+            height: 100vh;
+            background: #343a40;
+            color: white;
+        }
+
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            display: block;
+            padding: 10px 15px;
+        }
+
+        .sidebar a:hover {
+            background: #495057;
+        }
+    </style>
+</head>
+
+<body class="bg-light">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-2 sidebar">
+                <h4 class="mt-3">Dashboard</h4>
+                <a href="/">🏠 Beranda</a>
+                <a href="/users">👤 Kelola User</a>
+                <a href="/products">📦 Kelola Produk</a>
+            </div>
+
+            <!-- Konten -->
+            <div class="col-md-10 p-4">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h3>Kelola Produk</h3>
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCreate">+ Tambah
+                        Produk</button>
+                </div>
+
+                <!-- Tabel -->
+                <table class="table table-bordered table-striped">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Produk</th>
+                            <th>Harga</th>
+                            <th>Stok</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{range .Produk}}
+                        <tr>
+                            <td>{{.IDProduct}}</td>
+                            <td>{{.NamaProduct}}</td>
+                            <td>Rp {{.Harga}}</td>
+                            <td>{{.Stok}}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning" data-bs-toggle="modal"
+                                    data-bs-target="#modalUpdate-{{.IDProduct}}">Edit</button>
+                                <button class="btn btn-sm btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#modalDelete-{{.IDProduct}}">Hapus</button>
+                            </td>
+                            <!-- Modal Update -->
+                            <div class="modal fade" id="modalUpdate-{{.IDProduct}}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Edit Produk</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form method="post" action="/products/update/{{.IDProduct}}">
+                                                <label>Nama Produk</label>
+                                                <input type="text" class="form-control mb-2" name="nama_product"
+                                                    value="{{.NamaProduct}}">
+                                                <label>Harga</label>
+                                                <input type="number" class="form-control mb-2" name="harga"
+                                                    value="{{.Harga}}">
+                                                <label>Stok</label>
+                                                <input type="number" class="form-control mb-3" name="stok"
+                                                    value="{{.Stok}}">
+                                                <button type="submit" class="btn btn-success">Update</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal Delete -->
+                            <div class="modal fade" id="modalDelete-{{.IDProduct}}" tabindex="-1">
+                                <div class="modal-dialog">
+                                    <form method="GET" action="/products/delete/{{.IDProduct}}">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <p>Yakin ingin menghapus produk ini?</p>
+                                                <button type="submit" class="btn btn-danger">Ya, Hapus</button>
+                                                <button class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            {{end}}
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Create -->
+    <div class="modal fade" id="modalCreate" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Tambah Produk</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="/products">
+                        <label>Nama Produk</label>
+                        <input type="text" class="form-control mb-2" name="nama_product" required>
+                        <label>Harga</label>
+                        <input type="number" class="form-control mb-2" name="harga" required>
+                        <label>Stok</label>
+                        <input type="number" class="form-control mb-3" name="stok" required>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
