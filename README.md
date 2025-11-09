@@ -16,10 +16,12 @@ project-root/
 │   ├── go.mod
 │   ├── go.sum
 │   ├── main.go               # Entry point aplikasi
-│   ├── views/                # Template HTML (UI)
-│   ├── static/               # Asset frontend (CSS, JS, dll)
-│   └── ...                   # File atau folder tambahan
-└── mysql_data/               # Volume penyimpanan data MySQL (persistent)
+│   ├── config/               # Config DB
+│   ├── handlers/             # /Controllers
+│   ├── models/               
+│   ├── views/                
+│   └── .env                  # Custom enviroment (untuk development)
+└── mysql_data/               # Volume penyimpanan data MySQL (persistent) - nb:tidak disertakan
 ```
 
 
