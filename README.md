@@ -4,8 +4,9 @@ Proyek ini merupakan aplikasi web berbasis **Golang (Fiber Framework)** dengan i
 
 ---
 
-## ⚙️ Arsitektur Sistem
+## Arsitektur Sistem
 
+project-root/
 │
 ├── docker-compose.yml # Konfigurasi multi-container
 ├── Dockerfile # Image untuk aplikasi Go
