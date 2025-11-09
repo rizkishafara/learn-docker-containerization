@@ -21,7 +21,7 @@ project-root/
 │   ├── models/               
 │   ├── views/                
 │   └── .env                  # Custom enviroment (untuk development)
-└── mysql_data/               # Volume penyimpanan data MySQL (persistent) - nb:tidak disertakan
+└── mysql-data/               # Volume penyimpanan data MySQL (persistent) - nb:tidak disertakan
 ```
 
 
